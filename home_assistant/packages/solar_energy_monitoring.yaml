@@ -1,0 +1,46 @@
+template:
+  - sensor:
+      - name: "Total PV Power"
+        unique_id: total_pv_power
+        unit_of_measurement: "W"
+        state_class: measurement
+        device_class: power
+        availability: >
+          {{ is_number(states('sensor.em24_solar_em24_2_w_sum'))
+             and is_number(states('sensor.sma_pv_power')) }}
+        state: >
+          {% set fronius =
+            states('sensor.em24_solar_em24_2_w_sum') | float(0) %}
+          {% set sma =
+            states('sensor.sma_pv_power') | float(0) %}
+          {{ (fronius + sma) | round(1) }}
+
+      - name: "House Power Consumption"
+        unique_id: total_house_power
+        unit_of_measurement: "W"
+        state_class: measurement
+        device_class: power
+        availability: >
+          {{ is_number(states('sensor.em24_solar_em24_1_w_sum'))
+             and is_number(states('sensor.em24_solar_em24_2_w_sum')) }}
+        state: >
+          {% set em1 =
+            states('sensor.em24_solar_em24_1_w_sum') | float(0) %}
+          {% set em2 =
+            states('sensor.em24_solar_em24_2_w_sum') | float(0) %}
+          {{ (em1 + em2) | round(1) }}
+
+
+influxdb:
+  api_version: 2
+  ssl: false
+  host: ha_influxdb
+  port: 8086
+  token: !secret influxdb_token
+  organization: ha
+  bucket: home_automation
+  tags:
+    source: HA
+  tags_attributes:
+    - friendly_name
+  default_measurement: units

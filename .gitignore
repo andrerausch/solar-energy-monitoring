@@ -1,0 +1,32 @@
+# ESPHome
+secrets.yaml
+.esphome/
+*.bin
+*.elf
+*.map
+
+# Credentials
+.env
+.env.*
+!.env.example
+
+# Raw or private energy data
+*.har
+data/raw/
+data/private/
+history.csv
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+
+# Editors and operating systems
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store
+
+# Draw.io temporary files
+*.drawio.bkp
+~$*
