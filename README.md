@@ -48,6 +48,10 @@ The ESP32 reads both EM24 meters and publishes their measurements through ESPHom
 ![Monitoring architecture](docs/diagrams/Solar_system-monitoring_architecture.svg)
 
 
+## Home Assistant dashboard
+The dashboard combines live power measurements from both PV systems with household consumption, grid exchange and battery data. Integral and Utility Meter helpers provide the daily energy values.
+
+![Home Assistant monitoring dashboard](docs/images/home-assistant-dashboard.png)
 
 ## Hardware
 
@@ -165,8 +169,7 @@ Daily counters can then be created using **Utility Meter** helpers through:
 | Daily House Energy | `sensor.total_house_energy` | Daily |
 
 
-> **Note**
->
+> **Note:**
 > The Integral and Utility Meter helpers are currently created through the Home
 > Assistant user interface and are therefore not included directly in the
 > configuration package. They must be added manually after installing the
